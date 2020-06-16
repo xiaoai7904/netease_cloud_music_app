@@ -8,6 +8,6 @@
 
 #### 已开发完成页面
 
-<img src="tempDir/gifhome.gif" width=256 height=550 />
+<img src="tempDir/gifhome_640x1325_29s.gif" width=256 height=550 />
 
 #### 开发总结
