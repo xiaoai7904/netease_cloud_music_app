@@ -175,6 +175,12 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
               height: 320.0,
               padding: EdgeInsets.all(10.0),
               child: Swiper(
+                autoplay: true,
+                itemCount: _banner.length,
+                viewportFraction: 0.6,
+                scale: 0.8,
+                autoplayDelay: 5000,
+                duration: 1000,
                 itemBuilder: (BuildContext context, int index) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
@@ -246,10 +252,6 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
                     ),
                   );
                 },
-                // autoplay: true,
-                itemCount: _banner.length,
-                viewportFraction: 0.6,
-                scale: 0.8,
               ),
             );
           },

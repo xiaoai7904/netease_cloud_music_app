@@ -8,7 +8,8 @@
 
 #### 已开发完成页面
 
-<img src="tempDir/gifhome_640x1325_29s.gif" width=256 height=550 />
+<img src="tempDir/homePage.gif" width=256 height=550 />
+<img src="tempDir/songList.gif" width=256 height=550 />
 
 #### 开发总结
 
