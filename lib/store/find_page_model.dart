@@ -82,57 +82,67 @@ class FindPageModel extends ChangeNotifier {
 
   // 获取banner数据
   static Future requestBannerList({BuildContext context, Map<String, int> params = const {'type': 2}}) async {
-    Response bannerResult = await RequestUtil.doHttpPost(Api.banner, params);
-    // 请求成功更新banner数据
-    if (bannerResult.data['code'] == 200) {
-      List<BannerResponse> _bannerResult = (bannerResult.data['banners'] as List<dynamic>).map((item) => BannerResponse.fromJson(item)).toList();
-      Provider.of<FindPageModel>(context, listen: false).setBanners(_bannerResult);
-    }
-    return bannerResult;
+    try {
+      Response bannerResult = await RequestUtil.doHttpPost(Api.banner, params);
+      // 请求成功更新banner数据
+      if (bannerResult.data['code'] == 200) {
+        List<BannerResponse> _bannerResult = (bannerResult.data['banners'] as List<dynamic>).map((item) => BannerResponse.fromJson(item)).toList();
+        Provider.of<FindPageModel>(context, listen: false).setBanners(_bannerResult);
+      }
+      return bannerResult;
+    } catch (e) {}
   }
 
   // 获取推荐歌单
   static Future requestPersonalized({BuildContext context, Map<String, int> params = const {'type': 7}}) async {
-    Response personalizedResult = await RequestUtil.doHttpPost(Api.personalized, params);
-    if (personalizedResult.data['code'] == 200) {
-      List<PersonalizedResponse> _personalizedResult =
-          (personalizedResult.data['result'] as List<dynamic>).map((item) => PersonalizedResponse.fromJson(item)).toList();
-      Provider.of<FindPageModel>(context, listen: false).setPersonalized(_personalizedResult);
-    }
-    return personalizedResult;
+    try {
+      Response personalizedResult = await RequestUtil.doHttpPost(Api.personalized, params);
+      if (personalizedResult.data['code'] == 200) {
+        List<PersonalizedResponse> _personalizedResult =
+            (personalizedResult.data['result'] as List<dynamic>).map((item) => PersonalizedResponse.fromJson(item)).toList();
+        Provider.of<FindPageModel>(context, listen: false).setPersonalized(_personalizedResult);
+      }
+      return personalizedResult;
+    } catch (e) {}
   }
 
   // 获取推荐歌曲
   static Future requestPersonalizedSong({BuildContext context}) async {
-    Response personalizedSongResult = await RequestUtil.doHttpPost(Api.personalizedNewSong, {});
-    if (personalizedSongResult.data['code'] == 200) {
-      List<PersonalizedNewSongResponse> _personalizedSongResult =
-          (personalizedSongResult.data['result'] as List<dynamic>).map((item) => PersonalizedNewSongResponse.fromJson(item)).toList();
-      Provider.of<FindPageModel>(context, listen: false).setPersonalizedSong(_personalizedSongResult);
-      Provider.of<FindPageModel>(context, listen: false).setConvertPersonalizedSong(_personalizedSongResult);
-    }
-    return personalizedSongResult;
+    try {
+      Response personalizedSongResult = await RequestUtil.doHttpPost(Api.personalizedNewSong, {});
+      if (personalizedSongResult.data['code'] == 200) {
+        List<PersonalizedNewSongResponse> _personalizedSongResult =
+            (personalizedSongResult.data['result'] as List<dynamic>).map((item) => PersonalizedNewSongResponse.fromJson(item)).toList();
+        Provider.of<FindPageModel>(context, listen: false).setPersonalizedSong(_personalizedSongResult);
+        Provider.of<FindPageModel>(context, listen: false).setConvertPersonalizedSong(_personalizedSongResult);
+      }
+      return personalizedSongResult;
+    } catch (e) {}
   }
 
   // 获取推荐电台
   static Future requestPersonalizedDj({BuildContext context}) async {
-    Response personalizedDjResult = await RequestUtil.doHttpPost(Api.personalizedDjprogram, {});
-    if (personalizedDjResult.data['code'] == 200) {
-      List<PersonalizedDjResponse> _personalizedDjResult =
-          (personalizedDjResult.data['result'] as List<dynamic>).map((item) => PersonalizedDjResponse.fromJson(item)).toList();
-      Provider.of<FindPageModel>(context, listen: false).setPersonalizedDj(_personalizedDjResult);
-    }
-    return personalizedDjResult;
+    try {
+      Response personalizedDjResult = await RequestUtil.doHttpPost(Api.personalizedDjprogram, {});
+      if (personalizedDjResult.data['code'] == 200) {
+        List<PersonalizedDjResponse> _personalizedDjResult =
+            (personalizedDjResult.data['result'] as List<dynamic>).map((item) => PersonalizedDjResponse.fromJson(item)).toList();
+        Provider.of<FindPageModel>(context, listen: false).setPersonalizedDj(_personalizedDjResult);
+      }
+      return personalizedDjResult;
+    } catch (e) {}
   }
 
-   // 独家推送
+  // 独家推送
   static Future requestPersonalizedPrivatecontent({BuildContext context}) async {
-    Response personalizedPrivatecontentResult = await RequestUtil.doHttpPost(Api.personalizedPrivatecontent, {});
-    if (personalizedPrivatecontentResult.data['code'] == 200) {
-      List<PersonalizedPrivatecontentResponse> _personalizedPrivatecontentResult =
-          (personalizedPrivatecontentResult.data['result'] as List<dynamic>).map((item) => PersonalizedPrivatecontentResponse.fromJson(item)).toList();
-      Provider.of<FindPageModel>(context, listen: false).setPersonalizedPrivatecontent(_personalizedPrivatecontentResult);
-    }
-    return personalizedPrivatecontentResult;
+    try {
+      Response personalizedPrivatecontentResult = await RequestUtil.doHttpPost(Api.personalizedPrivatecontent, {});
+      if (personalizedPrivatecontentResult.data['code'] == 200) {
+        List<PersonalizedPrivatecontentResponse> _personalizedPrivatecontentResult =
+            (personalizedPrivatecontentResult.data['result'] as List<dynamic>).map((item) => PersonalizedPrivatecontentResponse.fromJson(item)).toList();
+        Provider.of<FindPageModel>(context, listen: false).setPersonalizedPrivatecontent(_personalizedPrivatecontentResult);
+      }
+      return personalizedPrivatecontentResult;
+    } catch (e) {}
   }
 }

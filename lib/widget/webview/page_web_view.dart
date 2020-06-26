@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:netease_cloud_music_app/widget/pageLoading/page_loading.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PageWebView extends StatefulWidget {
@@ -35,40 +37,50 @@ class _PageWebViewState extends State<PageWebView> {
             },
             navigationDelegate: (NavigationRequest request) {
               String _url = request.url;
-              print(_url);
-              print(widget.webViewUrl);
-              if (_url == widget.webViewUrl) {
-                setState(() {
-                  isLoading = true;
-                });
-                return NavigationDecision.navigate;
-              }
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return PageWebView(
-                      webViewUrl: _url,
-                    );
-                  },
-                ),
-              );
-              return NavigationDecision.prevent;
+              print('请求页面地址:$_url');
+              print('当前页面地址:${widget.webViewUrl}');
+              // if (_url == widget.webViewUrl) {
+              setState(() {
+                isLoading = true;
+              });
+              return NavigationDecision.navigate;
+              // }
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) {
+              //       return PageWebView(
+              //         webViewUrl: _url,
+              //       );
+              //     },
+              //   ),
+              // );
+              // return NavigationDecision.prevent;
+            },
+            onPageStarted: (String url) {
+              print('页面请求开始:$url');
             },
             onPageFinished: (String url) {
+              print('页面请求完成:$url');
+              setState(() {
+                isLoading = false;
+              });
               _controller.evaluateJavascript("document.title").then((result) {
                 setState(() {
                   _title = result;
-                  isLoading = false;
                 });
+              });
+            },
+            onWebResourceError: (error) {
+              print('页面请求错误: $error');
+              setState(() {
+                isLoading = false;
               });
             },
           ),
           isLoading == true
               ? Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: PageLoading(),
                 )
               : Container(),
         ],

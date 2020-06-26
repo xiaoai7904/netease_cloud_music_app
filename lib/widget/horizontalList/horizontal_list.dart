@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:netease_cloud_music_app/utils/utils.dart';
+import 'package:netease_cloud_music_app/widget/cachedNetworkImage/cached_network_image.dart';
 import 'package:netease_cloud_music_app/widget/hidden/hidden.dart';
 
 class HorizontalList extends StatelessWidget {
   final String picUrl;
   final String name;
-  final String playCount;
+  final int playCount;
   final String username;
   final double width;
   final double height;
   final double picHeight;
+  final double bottom;
 
-  HorizontalList({Key key, @required this.picUrl, @required this.name, this.playCount, this.username = '', this.width = 110.0, this.height = 155.0, this.picHeight = 110.0}) : super(key: key);
+  HorizontalList({
+    Key key,
+    @required this.picUrl,
+    @required this.name,
+    this.playCount = 0,
+    this.username = '',
+    this.width = 110.0,
+    this.height = 155.0,
+    this.picHeight = 110.0,
+    this.bottom = 85.0,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +38,9 @@ class HorizontalList extends StatelessWidget {
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(picUrl, height: picHeight, fit: BoxFit.cover),
+                  child: CachedNetworkImageWidget(imageUrl: picUrl, width: width, height: picHeight),
                 ),
-                playCount == ''
+                playCount == 0
                     ? Hidden()
                     : Positioned(
                         child: Row(
@@ -39,15 +52,15 @@ class HorizontalList extends StatelessWidget {
                               size: 12,
                             ),
                             Text(
-                              '$playCount ',
+                              '${Utils.numFormat(playCount)}  ',
                               style: TextStyle(color: Colors.white, fontSize: 12, shadows: [Shadow(color: Colors.white, offset: Offset(0, 0), blurRadius: 5)]),
                             )
                           ],
                         ),
-                        width: 110.0,
+                        width: width,
                         top: 0.0,
                         left: 0.0,
-                        bottom: 85.0,
+                        bottom: bottom,
                       ),
                 username == ''
                     ? Hidden()

@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:netease_cloud_music_app/utils/color_utils.dart';
+import 'package:netease_cloud_music_app/utils/utils.dart';
 import 'package:netease_cloud_music_app/widget/hidden/hidden.dart';
 
 // appBar搜索组件
@@ -24,9 +24,9 @@ class _SearchBarState extends State<SearchBar> {
   bool isFocus = false;
   Widget _currentWidget;
 
-  Color _f1f1f1Color = ColorUtils.hex2Color('#f1f1f1');
-  Color _color89 = ColorUtils.hex2Color('#898989');
-  Color _color333 = ColorUtils.hex2Color('#333333');
+  Color _f1f1f1Color = Utils.hex2Color('#f1f1f1');
+  Color _color89 = Utils.hex2Color('#898989');
+  Color _color333 = Utils.hex2Color('#333333');
 
   @override
   void initState() {

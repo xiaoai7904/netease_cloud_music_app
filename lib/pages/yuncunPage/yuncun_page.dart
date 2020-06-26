@@ -24,7 +24,7 @@ class _YuncunPageState extends State<YuncunPage> with AutomaticKeepAliveClientMi
 
   @override
   bool get wantKeepAlive => true;
-  
+
   Widget createTabs() {
     return TabBar(
       tabs: _tabValues.map((f) {
@@ -44,6 +44,7 @@ class _YuncunPageState extends State<YuncunPage> with AutomaticKeepAliveClientMi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: SearchBar(headerIcon: Icons.person_outline, showSearch: false, showTabs: true, tabs: createTabs()),

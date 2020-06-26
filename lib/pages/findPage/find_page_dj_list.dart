@@ -12,7 +12,7 @@ class FindPageDjList extends StatelessWidget {
         .map((item) => HorizontalList(
               picUrl: item.picUrl,
               name: item.name,
-              playCount: '',
+              playCount: 0,
               username: item.program.dj.nickname
             ))
         .toList();

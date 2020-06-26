@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/ball_pulse_footer.dart';
+// import 'package:flutter_easyrefresh/ball_pulse_footer.dart';
 import 'package:flutter_easyrefresh/delivery_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:netease_cloud_music_app/pages/findPage/find_page_banner.dart';
@@ -9,18 +9,24 @@ import 'package:netease_cloud_music_app/pages/findPage/find_page_privatecontent.
 import 'package:netease_cloud_music_app/pages/findPage/find_page_song_list.dart';
 import 'package:netease_cloud_music_app/pages/findPage/find_page_song_selection.dart';
 import 'package:netease_cloud_music_app/store/find_page_model.dart';
+import 'package:netease_cloud_music_app/widget/cachedNetworkImage/cached_network_image.dart';
 // import 'package:netease_cloud_music_app/widget/sampleListItem/sample_list_item.dart';
 import 'package:netease_cloud_music_app/widget/searchBar/search_bar.dart';
 import 'package:provider/provider.dart';
 
+// 发现页面
 class FindPage extends StatefulWidget {
+  final BuildContext parentContext;
+
+  FindPage({Key key, this.parentContext}) : super(key: key);
+
   @override
   _FindPageState createState() {
     return _FindPageState();
   }
 }
 
-class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
+class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin {
   // 获取banner
   void _requestBannerList() {
     FindPageModel.requestBannerList(context: context);
@@ -47,6 +53,9 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void initState() {
     super.initState();
     _requestBannerList();
@@ -57,10 +66,8 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
   }
 
   @override
-  bool get wantKeepAlive => true;
-  
-  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: SearchBar(headerIcon: Icons.mic_none),
@@ -101,6 +108,12 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Consumer<FindPageModel>(builder: (context, FindPageModel findPageModel, child) {
+                  if (findPageModel.banners.isEmpty) {
+                    return CachedNetworkImageWidget(
+                      imageUrl: '',
+                      height: 170.0,
+                    );
+                  }
                   return FindPageBanner(
                     banners: findPageModel.banners,
                   );
@@ -121,9 +134,7 @@ class _FindPageState extends State<FindPage> with AutomaticKeepAliveClientMixin{
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Consumer<FindPageModel>(builder: (context, FindPageModel findPageModel, child) {
-                  return FindPageSongList(
-                    personalized: findPageModel.personalized,
-                  );
+                  return FindPageSongList(personalized: findPageModel.personalized, parentContext: widget.parentContext);
                 });
               },
               childCount: 1,

@@ -29,14 +29,14 @@ class RouterUtils {
   }
 
   // 跳转页面
-  static Future navigateTo(BuildContext context, String path, [Map<String, String> params, TransitionType transition]) {
+  static Future navigateTo(BuildContext context, String path, [Map<String, String> params, TransitionType transition = TransitionType.inFromRight]) {
     var encodeParams = '';
-    if(params != null && params.isNotEmpty) {
-      params.forEach((String key, String value){
+    if (params != null && params.isNotEmpty) {
+      params.forEach((String key, String value) {
         encodeParams += '$key=$value&';
       });
     }
-    
-    return Application.router.navigateTo(context, encodeParams == '' ? path : '$path?$encodeParams');
+
+    return Application.router.navigateTo(context, encodeParams == '' ? path : '$path?$encodeParams', transition: transition);
   }
 }

@@ -8,18 +8,18 @@ class FindPagePrivatecontentList extends StatelessWidget {
 
   FindPagePrivatecontentList({Key key, this.personalizedPrivatecontent}) : super(key: key);
 
-  List<Widget> _createItem() {
-    return personalizedPrivatecontent
-        .map((item) => HorizontalList(
-              picUrl: item.sPicUrl,
-              name: item.name,
-              playCount: '',
-              width: 350.0,
-              height: 250.0,
-              picHeight: 190.0,
-            ))
-        .toList();
-  }
+  // List<Widget> _createItem() {
+  //   return personalizedPrivatecontent
+  //       .map((item) => HorizontalList(
+  //             picUrl: item.sPicUrl,
+  //             name: item.name,
+  //             playCount: '',
+  //             width: 350.0,
+  //             height: 250.0,
+  //             picHeight: 190.0,
+  //           ))
+  //       .toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class FindPagePrivatecontentList extends StatelessWidget {
                 return HorizontalList(
                   picUrl: personalizedPrivatecontent[index].sPicUrl,
                   name: personalizedPrivatecontent[index].name,
-                  playCount: '',
+                  playCount: 0,
                   width: 350.0,
                   height: 250.0,
                   picHeight: 190.0,

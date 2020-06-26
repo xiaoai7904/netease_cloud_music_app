@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:netease_cloud_music_app/utils/color_utils.dart';
+import 'package:netease_cloud_music_app/utils/utils.dart';
 
 class FindPageMenu extends StatelessWidget {
 
   final int _currentDay = new DateTime.now().day - 20;
-  final Color _colorf6f6f6 = ColorUtils.hex2Color('#6f6f6f');
+  final Color _colorf6f6f6 = Utils.hex2Color('#6f6f6f');
 
   String _getCurrentDay() => '${_currentDay < 10 ? '0' : ''}$_currentDay';
 

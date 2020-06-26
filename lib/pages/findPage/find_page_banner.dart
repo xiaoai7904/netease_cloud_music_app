@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:netease_cloud_music_app/entity/banner_response.dart';
+import 'package:netease_cloud_music_app/widget/cachedNetworkImage/cached_network_image.dart';
 import 'package:netease_cloud_music_app/widget/webview/page_web_view.dart';
 
 class FindPageBanner extends StatelessWidget {
@@ -40,14 +41,12 @@ class FindPageBanner extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: banners.isNotEmpty
-                      ? Image.network(
-                          banners.elementAt(index)?.pic ??
-                              'https://www.google.com.kh/url?sa=i&url=https%3A%2F%2Fmusic.163.com%2Fartist%3Fid%3D768306&psig=AOvVaw3wdNDAGPyMd-kc4giimbtN&ust=1590840035566000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIi5oo2D2ekCFQAAAAAdAAAAABAD',
-                          fit: BoxFit.cover)
-                      : Image.asset('assets/bj.jpg', fit: BoxFit.cover),
-                ),
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: CachedNetworkImageWidget(
+                      imageUrl: banners.elementAt(index)?.pic ?? '',
+                      height: 170.0,
+                    ) //Image.asset('assets/bj.jpg', fit: BoxFit.cover),
+                    ),
               ),
               Positioned(
                 child: UnconstrainedBox(

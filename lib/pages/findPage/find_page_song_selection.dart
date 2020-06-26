@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:netease_cloud_music_app/entity/personalized_new_song_response.dart';
+import 'package:netease_cloud_music_app/widget/cachedNetworkImage/cached_network_image.dart';
 
 class FindPageSongSelection extends StatelessWidget {
   final List<List<PersonalizedNewSongResponse>> convertPersonalizedSong;
@@ -16,7 +17,8 @@ class FindPageSongSelection extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(rowItem.picUrl, width: 50.0, height: 50.0, fit: BoxFit.cover),
+              child: CachedNetworkImageWidget(imageUrl: rowItem.picUrl, width: 50.0, height: 50.0),
+              // child: Image.network(rowItem.picUrl, width: 50.0, height: 50.0, fit: BoxFit.cover),
             ),
             Container(
               width: MediaQuery.of(context).size.width - 150.0,
@@ -75,31 +77,31 @@ class FindPageSongSelection extends StatelessWidget {
               children: <Widget>[
                 Text('推荐歌曲', style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.w700)),
                 DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black26),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: GestureDetector(
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.play_arrow,
-                                size: 14,
-                                color: Colors.black54,
-                              ),
-                              Text(
-                                ' 播放全部',
-                                style: TextStyle(fontSize: 12, color: Colors.black54),
-                              ),
-                            ],
-                          )),
-                    ))
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black26),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: GestureDetector(
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.play_arrow,
+                              size: 14,
+                              color: Colors.black54,
+                            ),
+                            Text(
+                              ' 播放全部',
+                              style: TextStyle(fontSize: 12, color: Colors.black54),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
               ],
             ),
           ),
-
           Container(
             height: 180.0,
             child: Swiper(
