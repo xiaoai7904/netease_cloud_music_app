@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:netease_cloud_music_app/entity/catlist_response.dart';
 import 'package:netease_cloud_music_app/entity/playlist_hot_response.dart';
 import 'package:netease_cloud_music_app/entity/top_play_list_response.dart';
 import 'package:netease_cloud_music_app/pages/songListPage/song_list_page_filter.dart';
@@ -50,9 +51,6 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
 
   // 滚动加载数据
   Future loadPageData(offset) {
-    setState(() {
-      offset++;
-    });
     return _request(offset: offset).then(
       (value) => {
         setState(() {
@@ -87,6 +85,11 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
   bool get wantKeepAlive => true;
 
   @override
+  void updateKeepAlive() {
+    super.updateKeepAlive();
+  }
+
+  @override
   void initState() {
     super.initState();
     _request = SongListPageModel.requestSongList(context: context, id: widget.category.id, limit: limit, name: widget.category.name);
@@ -117,11 +120,19 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
                       onTap: () async {
                         // 存储上一次过滤值,返回弹窗后如果值不相同在进行数据更新,反之不更新
                         songListPageModel.setOldFilterValue(songListPageModel.filterValue);
+                        Map<String, dynamic> catlistResponse = {};
+                        // 如果全部歌单分类已经存在就使用缓存数据，反之请求新数据
+                        if (songListPageModel.catlist.isEmpty) {
+                          catlistResponse = await SongListPageModel.requestCatList(context: context);
+                        } else {
+                          catlistResponse = {'list': songListPageModel.catlist};
+                        }
+
                         await showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
                           builder: (BuildContext context) {
-                            return SongListPageFilter();
+                            return SongListPageFilter(catlist: catlistResponse['list']);
                           },
                         );
 
@@ -299,6 +310,11 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
                       _easyRefreshController.finishLoad(success: true, noMore: true);
                     });
                   }
+
+                  setState(() {
+                    offset = offset + 1;
+                  });
+                  
                   return loadPageData(offset);
                 },
                 slivers: <Widget>[

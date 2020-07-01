@@ -34,7 +34,7 @@ class SongListPageModel extends ChangeNotifier {
 
   void setMySongList(list) {
     _mySongList = list;
-    // notifyListeners();
+    notifyListeners();
   }
 
   void setPlayListHot(list) {
@@ -168,4 +168,12 @@ class SongListPageModel extends ChangeNotifier {
       updateTabValue(mySongList);
     }
   }
+
+  static void updateSortCatTag({BuildContext context, int oldIndex, int newIndex}) {
+    List<PlayListHotResponse> mySongList = Provider.of<SongListPageModel>(context, listen: false).mySongList;
+    PlayListHotResponse row = mySongList.removeAt(oldIndex);
+    mySongList.insert(newIndex, row);
+    Provider.of<SongListPageModel>(context, listen: false).setMySongList(mySongList);
+  }
 }
+

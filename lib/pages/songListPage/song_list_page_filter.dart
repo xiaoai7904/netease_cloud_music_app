@@ -7,18 +7,21 @@ import 'package:provider/provider.dart';
 
 // 精品歌单过滤页面
 class SongListPageFilter extends StatefulWidget {
+  final  List<CatlistResponse> catlist;
+  SongListPageFilter({Key key, this.catlist});
+
   @override
   _SongListPageFilterState createState() => _SongListPageFilterState();
 }
 
 class _SongListPageFilterState extends State<SongListPageFilter> {
-  // 全部分类
-  List<CatlistResponse> _catlist = [];
+  // // 全部分类
+  // List<CatlistResponse> _catlist = [];
 
   @override
   void initState() {
     super.initState();
-    SongListPageModel.requestCatList(context: context).then((data) => setState(() => {_catlist = data['list']}));
+    // SongListPageModel.requestCatList(context: context).then((data) => setState(() => {_catlist = data['list']}));
   }
 
   @override
@@ -90,9 +93,9 @@ class _SongListPageFilterState extends State<SongListPageFilter> {
                         crossAxisSpacing: 15.0,
                         //显示区域宽高相等
                       ),
-                      itemCount: _catlist.length,
+                      itemCount: widget.catlist.length,
                       itemBuilder: (context, index) {
-                        var name = _catlist.elementAt(index).name;
+                        var name = widget.catlist.elementAt(index).name;
                         return Consumer<SongListPageModel>(builder: (context, SongListPageModel songListPageModel, child) {
                           return FlatButton(
                             color: songListPageModel.filterValue == name ? Colors.red[400] : Utils.hex2Color('#eaeaea'),

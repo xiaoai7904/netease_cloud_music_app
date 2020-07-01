@@ -19,6 +19,7 @@ class _SongListPageState extends State<SongListPage> {
     PlayListHotResponse.fromJson({'name': '推荐', 'id': 888}),
     PlayListHotResponse.fromJson({'name': '精品', 'id': 999})
   ];
+  bool forcedRefresh = false;
 
   void updateTabValue(list) {
     _controller = TabController(
@@ -30,9 +31,23 @@ class _SongListPageState extends State<SongListPage> {
     });
   }
 
+  void getSongListTag() {
+    SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
+    // setState(() {
+    //   forcedRefresh = true;
+    // });
+
+    // Future.delayed(Duration(seconds: 1), () {
+    //   setState(() {
+    //     forcedRefresh = false;
+    //   });
+    //   SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
+    // });
+  }
+
   @override
   void initState() {
-    SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
+    getSongListTag();
     super.initState();
   }
 
@@ -85,7 +100,7 @@ class _SongListPageState extends State<SongListPage> {
                     size: 30.0,
                     color: Colors.black54,
                   ),
-                  onTap: () => {RouterUtils.navigateTo(context, '/songListTag')},
+                  onTap: () => {RouterUtils.navigateTo(context, '/songListTag').then((data) => getSongListTag())},
                 ),
               )
             ],
@@ -96,6 +111,7 @@ class _SongListPageState extends State<SongListPage> {
         child: TabBarView(
           controller: _controller,
           children: _tabValues.map((item) {
+            if (forcedRefresh) return PageLoading();
             return SongListPageContent(category: item);
           }).toList(),
         ),

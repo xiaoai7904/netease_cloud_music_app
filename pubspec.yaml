@@ -41,6 +41,7 @@ dependencies:
   cached_network_image: ^2.2.0+1
   loading_indicator: ^1.1.0
   fluttertoast: ^4.0.1
+  reorderables: ^0.3.2
     
 dev_dependencies:
   flutter_test:
