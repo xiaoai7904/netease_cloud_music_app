@@ -23,6 +23,7 @@ class SongListPageContent extends StatefulWidget {
 
 class _SongListPageContentState extends State<SongListPageContent> with AutomaticKeepAliveClientMixin {
   EasyRefreshController _easyRefreshController;
+  ScrollController _scrollController;
   Function({int offset}) _request;
   // 数据列表
   List<Playlists> _data = [];
@@ -94,8 +95,9 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
     super.initState();
     _request = SongListPageModel.requestSongList(context: context, id: widget.category.id, limit: limit, name: widget.category.name);
     _easyRefreshController = EasyRefreshController();
+    _scrollController = ScrollController();
   }
-
+  
   // 精品页面
   Widget boutiquePageWidget() {
     if (widget.category.id == 999) {
@@ -290,6 +292,7 @@ class _SongListPageContentState extends State<SongListPageContent> with Automati
             boutiquePageWidget(),
             Expanded(
               child: EasyRefresh.custom(
+                scrollController: _scrollController,
                 controller: _easyRefreshController,
                 firstRefresh: true,
                 firstRefreshWidget: PageLoading(),

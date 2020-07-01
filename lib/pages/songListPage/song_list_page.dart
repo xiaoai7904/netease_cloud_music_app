@@ -31,23 +31,27 @@ class _SongListPageState extends State<SongListPage> {
     });
   }
 
-  void getSongListTag() {
-    SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
-    // setState(() {
-    //   forcedRefresh = true;
-    // });
-
-    // Future.delayed(Duration(seconds: 1), () {
-    //   setState(() {
-    //     forcedRefresh = false;
-    //   });
-    //   SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
-    // });
+  void getSongListTag(bool flag) {
+    if (flag == false) {
+      SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
+    } else {
+      // 修改tab页签数据强制刷新所有页面
+      setState(() {
+        forcedRefresh = true;
+      });
+      SongListPageModel.getSongListTag(context: context, boutique: _boutique, updateTabValue: updateTabValue);
+      Future.delayed(Duration(seconds: 1), () {
+        setState(() {
+          forcedRefresh = false;
+        });
+        _controller.animateTo(0);
+      });
+    }
   }
 
   @override
   void initState() {
-    getSongListTag();
+    getSongListTag(false);
     super.initState();
   }
 
@@ -100,22 +104,24 @@ class _SongListPageState extends State<SongListPage> {
                     size: 30.0,
                     color: Colors.black54,
                   ),
-                  onTap: () => {RouterUtils.navigateTo(context, '/songListTag').then((data) => getSongListTag())},
+                  onTap: () => {RouterUtils.navigateTo(context, '/songListTag').then((data) => getSongListTag(true))},
                 ),
               )
             ],
           ),
         ),
       ),
-      body: Container(
-        child: TabBarView(
-          controller: _controller,
-          children: _tabValues.map((item) {
-            if (forcedRefresh) return PageLoading();
-            return SongListPageContent(category: item);
-          }).toList(),
-        ),
-      ),
+      body: forcedRefresh == true
+          ? PageLoading()
+          : Container(
+              child: TabBarView(
+                controller: _controller,
+                children: _tabValues.map((item) {
+                  // if (forcedRefresh) return PageLoading();
+                  return SongListPageContent(category: item);
+                }).toList(),
+              ),
+            ),
     );
   }
 }
